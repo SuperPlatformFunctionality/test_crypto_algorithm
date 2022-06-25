@@ -63,7 +63,7 @@ let public_key = generatePublicKey(private_key);
 console.log("public key:", Buffer.from(public_key).toString("hex"), "length is ", public_key.length);
 
 let address = generateEthAddress(public_key)
-console.log("ethereum address:", address)
+console.log("ethereum address:", address);
 
 //以太坊
 //32字节私钥,(十六进制,64个字母表示)
