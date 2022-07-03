@@ -39,48 +39,34 @@ function generatePublicKey(private_key, compressed = false) {
 }
 
 function generateTRXAddress(public_key) {
-	/*
-	let res = public_key.slice(1); //去掉前缀
-	let h = new SHA3(256);
-	h.update(res);
-	let res = h.digest('hex');
-	res = keccak256(res);
-	res = res.slice(-40) //取后20字节, 160bit
-	*/
+	let temp = public_key;
+	if (temp.length === 65) {
+		temp = temp.slice(1); //去掉前缀
+	}
 
-	const com_addressBytes = computeAddress(public_key);
-	let res = getBase58CheckAddress(com_addressBytes);
+	temp = keccak256(temp); //，32字节，十六进制64个字母表示
+	if(temp.startsWith("0x")) {
+		temp = temp.substring(2);
+	}
+	console.log("temp,", temp.length);
+	const addressHex = "41" + temp.substring(24);//取后20个字节
+	const addressBytes = Buffer.from(addressHex, "hex");
+
+	//get checksum
+	const hash0 = doSHA256(addressBytes);
+	const hash1 = doSHA256(hash0);
+	let checkSum = hash1.slice(0, 4);
+
+	//将address和checksum组合，然后base58一下得到最终的地址
+	let res = base58.encode58(Buffer.concat([addressBytes, checkSum]));
 	return res;
 }
 
-function computeAddress(pubBytes) {
-	if (pubBytes.length === 65) {
-		pubBytes = pubBytes.slice(1);
-	}
-
-
-	const hash = keccak256(pubBytes).toString().substring(2);
-	const addressHex = "41" + hash.substring(24);
-
-	return Buffer.from(addressHex, "hex");
-}
-
-function getBase58CheckAddress(addressBytes) {
-	const hash0 = SHA256(addressBytes);
-	const hash1 = SHA256(hash0);
-
-	let checkSum = hash1.slice(0, 4);
-	checkSum = Buffer.concat([addressBytes, checkSum]);
-
-	return base58.encode58(checkSum);
-}
-
-function SHA256(msgBytes) {
+function doSHA256(msgBytes) {
 	const msgHex = msgBytes.toString("hex");
 	const hashHex = sha256('0x' + msgHex).replace(/^0x/, '')
 	return Buffer.from(hashHex, "hex");
 }
-
 
 
 //let private_key_hex = '616abd861dc63b5311980c4903ff7993b23f1d083c84f6f447bcc9d77c8921b4'; //32B, 256bit
@@ -94,7 +80,7 @@ let public_key = generatePublicKey(private_key);
 console.log("public key:", Buffer.from(public_key).toString("hex"), "length is ", public_key.length);
 
 let address = generateTRXAddress(public_key);
-console.log("trx address:", address)
+console.log("trx address:", address);
 
 
 
@@ -105,3 +91,5 @@ const tronWeb = new TronWeb({
 	}
 )
 console.log("trx address form tronWeb", tronWeb.address.fromPrivateKey(private_key_hex));
+
+//console.log("1:",sha256(Buffer.from("1")), sha256(49), sha256(Buffer.from("31", "hex")));
