@@ -46,13 +46,15 @@ function generateSPFAddress(public_key) {
 		temp = temp.substring(2);
 	}
 
-	const addressHex = "033cf5" + temp.substring(24);//取后20个字节
+	temp = temp.substring(24);//取后20个字节
+	console.log("ethereum style address","0x"+temp);
+
+	const addressHex = "033cf5" + temp;
 	const addressBytes = Buffer.from(addressHex, "hex");
 
 	//get checksum
-	const hash0 = doSHA256(addressBytes);
-	const hash1 = doSHA256(hash0);
-	let checkSum = hash1.slice(0, 4);
+	let checkSum = doSHA256(doSHA256(addressBytes));
+	checkSum = checkSum.slice(0, 4);
 
 	//将address和checksum组合，然后base58一下得到最终的地址
 	let res = base58.encode58(Buffer.concat([addressBytes, checkSum]));
