@@ -92,10 +92,10 @@ let transferAddressFromSPFToETH = function(spfAddress) {
 }
 
 
-let private_key_hex = '616abd861dc63b5311980c4903ff7993b23f1d083c84f6f447bcc9d77c8921b4'; //32B, 256bit
-let private_key = loadPrivateKeyFromHexString(private_key_hex) //32B, 256bit
-//let private_key = generatePrivateKey();
-//let private_key_hex = private_key.toString("hex");
+//let private_key_hex = '616abd861dc63b5311980c4903ff7993b23f1d083c84f6f447bcc9d77c8921b4'; //32B, 256bit
+//let private_key = loadPrivateKeyFromHexString(private_key_hex) //32B, 256bit
+let private_key = generatePrivateKey();
+let private_key_hex = private_key.toString("hex");
 console.log("private key:", private_key_hex, "length is ", private_key.length);
 
 let public_key = generatePublicKey(private_key);
