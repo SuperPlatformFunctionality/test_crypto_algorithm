@@ -48,17 +48,7 @@ function generateSPFAddress(public_key) {
 
 	temp = temp.substring(24);//取后20个字节
 	console.log("ethereum style address","0x"+temp);
-
-	const addressHex = "033cf5" + temp;
-	const addressBytes = Buffer.from(addressHex, "hex");
-
-	//get checksum
-	let checkSum = doSHA256(doSHA256(addressBytes));
-	checkSum = checkSum.slice(0, 4);
-
-	//将address和checksum组合，然后base58一下得到最终的地址
-	let res = base58.encode58(Buffer.concat([addressBytes, checkSum]));
-	return res;
+	return transferAddressFromEthToSPF(temp);
 }
 
 function doSHA256(msgBytes) {
@@ -67,11 +57,45 @@ function doSHA256(msgBytes) {
 	return Buffer.from(hashHex, "hex");
 }
 
+const calculationPrefix = "033cf5";
+let transferAddressFromEthToSPF = function(ethAddress) {
+	if(ethAddress.startsWith("0x")) {
+		ethAddress = ethAddress.substring(2);
+	}
 
-//let private_key_hex = '616abd861dc63b5311980c4903ff7993b23f1d083c84f6f447bcc9d77c8921b4'; //32B, 256bit
-//let private_key = loadPrivateKeyFromHexString(private_key_hex) //32B, 256bit
-let private_key = generatePrivateKey();
-let private_key_hex = private_key.toString("hex");
+	const addressHex = calculationPrefix + ethAddress;
+	const addressBytes = Buffer.from(addressHex, "hex");
+
+	//get checksum
+	let checkSum = doSHA256(doSHA256(addressBytes));
+	checkSum = checkSum.subarray(0, 4);
+
+	//将address和checksum组合，然后base58一下得到最终的地址
+	let res = base58.encode58(Buffer.concat([addressBytes, checkSum]));
+	return res;
+}
+
+let transferAddressFromSPFToETH = function(spfAddress) {
+	let temp = base58.decode58(spfAddress);
+	temp = Buffer.from(temp);
+
+	let checkSum = temp.subarray(-4);
+	let addressBytes = temp.subarray(0, temp.length - 4);
+	if(!checkSum.equals(doSHA256(doSHA256(addressBytes)).slice(0, 4))) {
+		return "" //checksum not right
+	}
+
+	let ethAddress = addressBytes.toString("hex");
+	ethAddress = ethAddress.substring(calculationPrefix.length);
+	ethAddress = "0x"+ethAddress;
+	return ethAddress;
+}
+
+
+let private_key_hex = '616abd861dc63b5311980c4903ff7993b23f1d083c84f6f447bcc9d77c8921b4'; //32B, 256bit
+let private_key = loadPrivateKeyFromHexString(private_key_hex) //32B, 256bit
+//let private_key = generatePrivateKey();
+//let private_key_hex = private_key.toString("hex");
 console.log("private key:", private_key_hex, "length is ", private_key.length);
 
 let public_key = generatePublicKey(private_key);
