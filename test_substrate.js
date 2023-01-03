@@ -11,11 +11,12 @@ console.log("use prefix:", prefix);
 let data = prefix + public_key;
 
 let h = blake2.createHash('blake2b');
-h.update(Buffer.from('53533538505245'+ data, 'hex'));
+h.update(Buffer.from(Buffer.from("SS58PRE", "utf8").toString("hex") + data, 'hex'));
 let checksum = h.digest("hex").substring(0, 4);
 console.log("checksum:", checksum);
 
 const bytes = Buffer.from(data + checksum, 'hex')
-const address = bs58.encode(bytes)
+
+const address = bs58.encode(bytes);
 const address2 = base58.encode58(bytes);
 console.log("substrate address:", address, address2);
