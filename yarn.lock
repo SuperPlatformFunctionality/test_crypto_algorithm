@@ -350,6 +350,11 @@
     "@ethersproject/properties" "^5.6.0"
     "@ethersproject/strings" "^5.6.1"
 
+"@tronweb3/google-protobuf@^3.21.2":
+  "integrity" "sha512-IVcT2GfWX3K6tHUVhs14NP5uzKhQt4KeDya1g9ACxuZsUzsaoGUIGzceK2Ltu7xp1YV94AaHOf4yxLAivlvEkQ=="
+  "resolved" "https://registry.npmjs.org/@tronweb3/google-protobuf/-/google-protobuf-3.21.2.tgz"
+  "version" "3.21.2"
+
 "@types/node@*":
   "integrity" "sha512-HzNRZtp4eepNitP+BD6k2L6DROIDG4Q0fm4x+dwfsr6LGmROENnok75VGw40628xf+iR24WeMFcHuuBDUAzzsQ=="
   "resolved" "https://registry.npmjs.org/@types/node/-/node-18.0.3.tgz"
@@ -764,12 +769,13 @@
   dependencies:
     "safe-buffer" "~5.2.0"
 
-"tronweb@^4.2.0":
-  "integrity" "sha512-zNWG9iHCfpmRHBpiC2YpRlBdtmfdG1VNJw0uMg/lxZYyFpHghf2LvGCS34Kv7HvoLH7tck/O/CZGYudKkoLF7w=="
-  "resolved" "https://registry.npmjs.org/tronweb/-/tronweb-4.2.0.tgz"
-  "version" "4.2.0"
+"tronweb@^5.0.0":
+  "integrity" "sha512-cKwYWYSGJ5ROyY2ybWSHGF38puML4pCl4Uax7sEOtJpMnjgO0RWrs6swCj/6RnM75rPL1O+RZshGXD0JuED2zg=="
+  "resolved" "https://registry.npmjs.org/tronweb/-/tronweb-5.0.0.tgz"
+  "version" "5.0.0"
   dependencies:
     "@babel/runtime" "^7.0.0"
+    "@tronweb3/google-protobuf" "^3.21.2"
     "axios" "^0.26.1"
     "bignumber.js" "^9.0.1"
     "elliptic" "^6.5.4"
