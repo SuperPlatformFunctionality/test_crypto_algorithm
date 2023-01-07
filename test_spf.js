@@ -63,6 +63,10 @@ let transferAddressFromEthToSPF = function(ethAddress) {
 		ethAddress = ethAddress.substring(2);
 	}
 
+	if(ethAddress.length != 40) {
+		throw new Error("eth address length invalid");
+	}
+
 	const addressHex = calculationPrefix + ethAddress;
 	const addressBytes = Buffer.from(addressHex, "hex");
 
@@ -82,7 +86,7 @@ let transferAddressFromSPFToETH = function(spfAddress) {
 	let checkSum = temp.subarray(-4);
 	let addressBytes = temp.subarray(0, temp.length - 4);
 	if(!checkSum.equals(doSHA256(doSHA256(addressBytes)).subarray(0, 4))) {
-		return "" //checksum not right
+		throw new Error("spf address checksum checking error");
 	}
 
 	let ethAddress = addressBytes.toString("hex");
@@ -115,3 +119,15 @@ console.log("public key:", Buffer.from(public_key).toString("hex"), "length is "
 
 let address = generateSPFAddress(public_key);
 console.log("SPF address:", address);
+
+
+let test = function() {
+	console.log("is spf address valid?", isSPFAddressValid("SPFHiwAcPNSyc641exgxJXF9pKshKHPDQBNm"));
+	console.log("is spf address valid?", isSPFAddressValid("SPFHiwAcPNSyc641exgxJXF9pKshKHPDQBNM"));
+	console.log("is spf address valid?", isSPFAddressValid("SPFHiwAcPNSyc641exgxJXF9pKshKHPDQBNu"));
+
+	console.log(transferAddressFromSPFToETH("SPFBjgqUj3s9cHxkZAY9M3Ce4eoD37awVqcQ"));
+	console.log(transferAddressFromEthToSPF("0xad8b5eb4fdb274c3c40d10cc9c5266f7b0f7546f"));
+}
+
+test();
