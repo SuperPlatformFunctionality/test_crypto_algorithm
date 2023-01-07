@@ -81,7 +81,7 @@ let transferAddressFromSPFToETH = function(spfAddress) {
 
 	let checkSum = temp.subarray(-4);
 	let addressBytes = temp.subarray(0, temp.length - 4);
-	if(!checkSum.equals(doSHA256(doSHA256(addressBytes)).slice(0, 4))) {
+	if(!checkSum.equals(doSHA256(doSHA256(addressBytes)).subarray(0, 4))) {
 		return "" //checksum not right
 	}
 
@@ -91,6 +91,18 @@ let transferAddressFromSPFToETH = function(spfAddress) {
 	return ethAddress;
 }
 
+let isSPFAddressValid = function(spfAddress) {
+	if(!spfAddress.startsWith("SPF")) {
+		return false;
+	}
+
+	let temp = base58.decode58(spfAddress);
+	temp = Buffer.from(temp);
+	let checkSum = temp.subarray(-4);
+	let addressBytes = temp.subarray(0, temp.length - 4);
+	let checkOk = checkSum.equals(doSHA256(doSHA256(addressBytes)).subarray(0, 4))
+	return checkOk;
+}
 
 //let private_key_hex = '616abd861dc63b5311980c4903ff7993b23f1d083c84f6f447bcc9d77c8921b4'; //32B, 256bit
 //let private_key = loadPrivateKeyFromHexString(private_key_hex) //32B, 256bit
@@ -103,6 +115,3 @@ console.log("public key:", Buffer.from(public_key).toString("hex"), "length is "
 
 let address = generateSPFAddress(public_key);
 console.log("SPF address:", address);
-
-
-
