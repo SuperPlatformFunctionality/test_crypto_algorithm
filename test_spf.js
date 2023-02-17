@@ -128,6 +128,13 @@ let test = function() {
 
 	console.log(transferAddressFromSPFToETH("SPFBjgqUj3s9cHxkZAY9M3Ce4eoD37awVqcQ"));
 	console.log(transferAddressFromEthToSPF("0xad8b5eb4fdb274c3c40d10cc9c5266f7b0f7546f"));
+	console.log(transferAddressFromEthToSPF("0x1C98481D19cAC17C029dcCA8494279828418d4EB"));
+	console.log(transferAddressFromEthToSPF("0x8D6EF00FD445982f4F49f889f6F168bfF8c9548F"));
+	console.log(transferAddressFromEthToSPF("0xCd6A2A9772426fB9f759A6157A4CC5530b6674fe"));
+	console.log(transferAddressFromEthToSPF("0x44f6812d7ae6f17F4963fC349652696BF9bc9307"));
+
+
+	console.log(transferAddressFromSPFToETH("SPFHiwAcPNSyc641exgxJXF9pKshKHPDQBNm"));
 }
 
 test();
