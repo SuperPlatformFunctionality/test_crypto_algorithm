@@ -135,6 +135,8 @@ let test = function() {
 
 
 	console.log(transferAddressFromSPFToETH("SPFHiwAcPNSyc641exgxJXF9pKshKHPDQBNm"));
+	console.log(transferAddressFromEthToSPF("0xb91944FEf72B09629b5Cf79b134f20bD722F9d82"));
+	console.log(transferAddressFromEthToSPF("0xC670813707C92dC82a43f741008D711bD2249bd8"));
 }
 
 test();
