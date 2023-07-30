@@ -137,6 +137,19 @@ let test = function() {
 	console.log(transferAddressFromSPFToETH("SPFHiwAcPNSyc641exgxJXF9pKshKHPDQBNm"));
 	console.log(transferAddressFromEthToSPF("0xb91944FEf72B09629b5Cf79b134f20bD722F9d82"));
 	console.log(transferAddressFromEthToSPF("0xC670813707C92dC82a43f741008D711bD2249bd8"));
+	console.log(transferAddressFromEthToSPF("0xf6ae36ddde5b4986169e072be691a83c46123d4d"));
+	console.log(transferAddressFromEthToSPF("0x60aa7e50f78b2f9a6d4874be181900aa08813c45"));
+
+	console.log("0x25F2B419c513388fDFEE12982Baa3fA8153Be038",transferAddressFromEthToSPF("0x25F2B419c513388fDFEE12982Baa3fA8153Be038"));
+	console.log("SPF8TzD6eeLFPX1nxan7fnF9HnXJ2DoFoWEr", transferAddressFromSPFToETH("SPF8TzD6eeLFPX1nxan7fnF9HnXJ2DoFoWEr"))
+
+	console.log("0x6434d82cd9fbde6c0df74d7615cc321023a39473",transferAddressFromEthToSPF("0x6434d82cd9fbde6c0df74d7615cc321023a39473"));
+	console.log("SPFE9BLYTJvX7cmSM7KpwW1iXw1GmBuEeaZi",transferAddressFromSPFToETH("SPFE9BLYTJvX7cmSM7KpwW1iXw1GmBuEeaZi"));
+
+	console.log(transferAddressFromEthToSPF("0x743ea61bf8C26Aeabca021F2535da813b6B01f6D"));
+
+	console.log(transferAddressFromEthToSPF("0xE9C8437c549d19703e5F4eC7Ad8c7F23E8af37b4"));
+
 }
 
 test();
