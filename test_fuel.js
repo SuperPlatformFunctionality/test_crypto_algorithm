@@ -11,6 +11,7 @@ console.log("priKey is", priKey);
 let theWalletUnlocked = fuels.Wallet.fromPrivateKey(priKey);
 console.log(theWalletUnlocked);
 console.log(theWalletUnlocked.address.toB256());
+console.log("the private key from the unlocked wallet", theWalletUnlocked.signer().privateKey);
 
 let theWalletLocked = fuels.Wallet.fromAddress(theWalletUnlocked.address);
 console.log(theWalletLocked);
